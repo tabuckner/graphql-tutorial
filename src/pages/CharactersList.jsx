@@ -1,19 +1,12 @@
-import { useQuery, gql } from '@apollo/client'
+import { useCharacters } from '../hooks/useCharacters';
 
-const GET_CHARACTERS = gql`
-query {
-  characters {
-    results {
-      id
-      name
-      image
-    }
-  }
-}`;
 
 const CharactersList = () => {
-  const { error, data, loading } = useQuery(GET_CHARACTERS);
-  console.warn(error, data, loading);
+  const { error, data, loading } = useCharacters();
+
+  if (error) {
+    return <div><h2>Error!</h2><p>{error}</p></div>
+  }
 
   if (loading) {
     return <div>Loading...</div>
@@ -21,7 +14,7 @@ const CharactersList = () => {
 
   return <div>
     {data.characters.results.map(character => {
-      return <div>
+      return <div key={character.id}>
         <h2>{character.name}</h2>
         <img src={character.image} alt="character.name" />
       </div>
