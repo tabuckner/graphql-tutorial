@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useCharacters } from '../hooks/useCharacters';
 
 
@@ -14,10 +15,14 @@ const CharactersList = () => {
 
   return <div>
     {data.characters.results.map(character => {
-      return <div key={character.id}>
-        <h2>{character.name}</h2>
-        <img src={character.image} alt="character.name" />
-      </div>
+      return (
+        <div key={character.id}>
+          <Link to={`/${character.id}`}>
+            <h2>{character.name}</h2>
+            <img src={character.image} alt="character.name" />
+          </Link>
+        </div>
+      )
     })}
   </div>;
 }
